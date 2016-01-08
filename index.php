@@ -12,15 +12,11 @@ and open the template in the editor.
     <body>
         <?php
         // put your code here
-        $temp = 'Jim';
-        echo 'Hi, my name is ';
-        echo $temp;
-        $temp = 'geek';
-        echo "I am a ";
-        echo $temp;
-        $temp = 10;
-        echo 'My level is ';
-        echo $temp;
+         $name = 'Tyler';
+         $what = 'nerd';
+         $level = 42;
+         echo 'Hi, my name is '.$name, '. and I am a level '.$level.' '.$what;
+         
         
         ?>
     </body>
