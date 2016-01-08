@@ -17,11 +17,18 @@ and open the template in the editor.
          $level = 42;
          echo 'Hi, my name is '.$name, '. and I am a level '.$level.' '.$what;
          
-         $hoursworked = 10;
+         $hoursworked = $_GET['hours'];
          $rate = 12;
          $total = $hoursworked * $rate;
-         echo '<br/>';
-         echo 'You owe me '.$total;
+         echo '<br/>';         
+         $answer = 'unkown';
+//         switch (name)
+//         {
+//             case 'Tyler': $answer = 'great'; break;
+//             case 'George'; $answer = 'unkown'; break;
+//             default: $answer = 'unkown';
+//         }
+         echo ($total > 0) ? 'you owe me '.$total : "You're welcome";
         
         ?>
     </body>
