@@ -20,7 +20,7 @@ and open the template in the editor.
          $hoursworked = $_GET['hours'];
          $rate = 12;
          $total = $hoursworked * $rate;
-         $positon = $_GET['board'];
+         $position = $_GET['board'];
          $squares = str_split($position);
          echo '<br/>';         
          $answer = 'unkown';
@@ -36,6 +36,11 @@ and open the template in the editor.
              $total = $hoursworked * $rate;
          }
          echo ($total > 0) ? 'you owe me '.$total : "You're welcome";
+         echo '<br/>';
+         
+         if (winner('x', $squares)) echo 'You win.';
+         else if (winner('o', $squares)) echo 'I win.';
+         else echo 'No winner yet.';
          
          function winner($token, $position) {
              $won = false;
