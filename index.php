@@ -20,6 +20,8 @@ and open the template in the editor.
          $hoursworked = $_GET['hours'];
          $rate = 12;
          $total = $hoursworked * $rate;
+         $positon = $_GET['board'];
+         $squares = str_split($position);
          echo '<br/>';         
          $answer = 'unkown';
 //         switch (name)
@@ -28,7 +30,26 @@ and open the template in the editor.
 //             case 'George'; $answer = 'unkown'; break;
 //             default: $answer = 'unkown';
 //         }
+         if ($hoursworked > 40) {
+             $total = $hoursworked * $rate * 1.5;
+         } else {
+             $total = $hoursworked * $rate;
+         }
          echo ($total > 0) ? 'you owe me '.$total : "You're welcome";
+         
+         function winner($token, $position) {
+             $won = false;
+             if (($position[0] == $token) &&
+                     ($position[1] == $token) &&
+                     ($position[2] == $token)) {
+                          $won = true;
+             } else if (($position[3] == $token) &&
+                            ($position[4] == $token) &&
+                            ($position[5] == $token)) {
+                                $won = true;
+             }
+             return $won;
+         }
         
         ?>
     </body>
