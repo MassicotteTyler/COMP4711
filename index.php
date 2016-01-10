@@ -11,26 +11,6 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-        // put your code here
-         $name = 'Tyler';
-         $what = 'nerd';
-         $level = 42;
-         echo 'Hi, my name is '.$name, '. and I am a level '.$level.' '.$what;
-         
-         $hoursworked = $_GET['hours'];
-         $rate = 12;
-         $total = $hoursworked * $rate;
-         echo '<br/>';         
-         $answer = 'unkown';
-
-         if ($hoursworked > 40) {
-             $total = $hoursworked * $rate * 1.5;
-         } else {
-             $total = $hoursworked * $rate;
-         }
-         echo ($total > 0) ? 'you owe me '.$total : "You're welcome";
-         echo '<br/>';
-         
          
          class Game {
              
@@ -49,9 +29,33 @@ and open the template in the editor.
                }
                return $result;
             }
+            
+            function display() {
+                echo '<table cols="3" style="font-size:large; font-weight: bold">';
+                echo '<tr>';
+                for ($pos=0; $pos<9; $pos++) {
+                    echo $this->show_cell($pos);
+                    if ($pos %3 == 2) echo '</tr><tr>';
+                }
+                echo '</tr>';
+                echo '</table>';
+                
+            }
+            
+            function show_cell($which) {
+                $token = $this->position[$which];
+                if ($token <> '-') return '<td>'.$token.'</td>';
+                
+                $this->newposition = $this->position;
+                $this->newposition[$which] = 'o';
+                $move = implode($this->newposition);
+                $link = '/?board='.$move;
+                return '<td><a href="'.$link.'>-</a></td>';
+            }
          }
         
          $game = new Game($_GET['board']);
+         $game->display();
          if ($game->winner('x'))
              echo 'You win. Lucky guesses!';
          else if ($game->winner('o'))
