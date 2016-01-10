@@ -24,12 +24,7 @@ and open the template in the editor.
          $squares = str_split($position);
          echo '<br/>';         
          $answer = 'unkown';
-//         switch (name)
-//         {
-//             case 'Tyler': $answer = 'great'; break;
-//             case 'George'; $answer = 'unkown'; break;
-//             default: $answer = 'unkown';
-//         }
+
          if ($hoursworked > 40) {
              $total = $hoursworked * $rate * 1.5;
          } else {
@@ -43,17 +38,13 @@ and open the template in the editor.
          else echo 'No winner yet.';
          
          function winner($token, $position) {
-             $won = false;
-             if (($position[0] == $token) &&
-                     ($position[1] == $token) &&
-                     ($position[2] == $token)) {
-                          $won = true;
-             } else if (($position[3] == $token) &&
-                            ($position[4] == $token) &&
-                            ($position[5] == $token)) {
-                                $won = true;
-             }
-             return $won;
+            for ($row = 0; $row < 3; $row++) {
+                $result = true;
+                for ($col = 0; $col < 3; $col++)
+                    if ($position[3*$row+$col] != $token) $result = false;
+            }
+           
+             return $result;
          }
         
         ?>
