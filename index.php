@@ -20,8 +20,6 @@ and open the template in the editor.
          $hoursworked = $_GET['hours'];
          $rate = 12;
          $total = $hoursworked * $rate;
-         $position = $_GET['board'];
-         $squares = str_split($position);
          echo '<br/>';         
          $answer = 'unkown';
 
@@ -33,20 +31,33 @@ and open the template in the editor.
          echo ($total > 0) ? 'you owe me '.$total : "You're welcome";
          echo '<br/>';
          
-         if (winner('x', $squares)) echo 'You win.';
-         else if (winner('o', $squares)) echo 'I win.';
-         else echo 'No winner yet.';
          
-         function winner($token, $position) {
-            for ($row = 0; $row < 3; $row++) {
-                $result = true;
-                for ($col = 0; $col < 3; $col++)
-                    if ($position[3*$row+$col] != $token) $result = false;
+         class Game {
+             
+             var $position;
+             
+             function __construct($squares) {
+                 $this->position = str_split($squares);
+             }
+             
+            function winner($token) {
+                $result = false;
+               for ($row = 0; $row < 3; $row++) {
+                   $result = true;
+                   for ($col = 0; $col < 3; $col++)
+                       if ($this->position[3*$row+$col] != $token) $result = false;
+               }
+               return $result;
             }
-           
-             return $result;
          }
         
+         $game = new Game($_GET['board']);
+         if ($game->winner('x'))
+             echo 'You win. Lucky guesses!';
+         else if ($game->winner('o'))
+             echo 'I win. Muahaha';
+         else
+             echo 'No winner yet, but you are losing.';
         ?>
     </body>
 </html>
