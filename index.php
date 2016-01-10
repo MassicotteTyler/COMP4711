@@ -27,6 +27,25 @@ and open the template in the editor.
                    for ($col = 0; $col < 3; $col++)
                        if ($this->position[3*$row+$col] != $token) $result = false;
                }
+               
+               for ($col=0; $col<3; $col++) {
+                    $result = true;
+                    for($row=0; $row<3; $row++) {
+                        if ($this->position[3*$row+$col] != $token) $result = false;
+                    }
+                    if ($result) return true;
+                }
+                
+                if (($this->position[0] == $token) 
+                    && ($this->position[4] == $token)
+                    && ($this->position[8] == $token)) {
+                    $result = true;
+                } else if (($this->position[2] == $token) 
+                    && ($this->position[4] == $token)
+                    && ($this->position[6] == $token)) {
+                    $result = true;
+                }
+                
                return $result;
             }
             
@@ -47,21 +66,40 @@ and open the template in the editor.
                 if ($token <> '-') return '<td>'.$token.'</td>';
                 
                 $this->newposition = $this->position;
-                $this->newposition[$which] = 'o';
+                $this->newposition[$which] = 'x';
                 $move = implode($this->newposition);
-                $link = '/?board='.$move;
-                return '<td><a href="'.$link.'>-</a></td>';
+                $link = '/TicTacToe/?board='.$move;
+                return '<td><a href="'.$link.'">-</a></td>';
+            }
+            
+            function pick_move() {
+                if ($this->winner('x'))
+                    echo 'You win!';
+                else if ($this->winner('o'))
+                    echo 'I won, haha';
+                else {
+
+                    do {
+                        $pos = rand(0, 8);
+                    } while($this->position[$pos] != '-');
+                    $this->position[$pos] = 'o';
+                    if ($this->winner('o'))
+                        echo 'I won, haha';
+                    else
+                        echo 'No one has won, yet...';
+                }
+
             }
          }
-        
-         $game = new Game($_GET['board']);
+         
+        if(isset($_GET['board']))
+           $board = $_GET['board'];
+        else
+            $board = '---------';
+
+         $game = new Game($board);
+         $game->pick_move();
          $game->display();
-         if ($game->winner('x'))
-             echo 'You win. Lucky guesses!';
-         else if ($game->winner('o'))
-             echo 'I win. Muahaha';
-         else
-             echo 'No winner yet, but you are losing.';
         ?>
     </body>
 </html>
